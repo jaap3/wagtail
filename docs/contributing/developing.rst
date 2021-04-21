@@ -67,9 +67,11 @@ From the root of the Wagtail codebase, run the following command to run all the 
 Running only some of the tests
 ------------------------------
 
-At the time of writing, Wagtail has well over 2500 tests, which takes a while to
-run. You can run tests for only one part of Wagtail by passing in the path as
-an argument to ``runtests.py`` or ``tox``:
+The Wagtail test suite covers a large portion of the enire code base. Running all these
+tests can take a fair amount of time.
+
+To test only a specific part of Wagtail run ``runtests.py`` or ``tox`` with the name
+of a module, test case or test method:
 
 .. code-block:: console
 
@@ -77,21 +79,20 @@ an argument to ``runtests.py`` or ``tox``:
     $ python runtests.py wagtail.core
 
     $ # Running in a specified Tox environment
-    $ tox -e py36-dj22-sqlite-noelasticsearch wagtail.core
+    $ tox -e py39-djmain-sqlite-noelasticsearch wagtail.core
 
     $ # See a list of available Tox environments
     $ tox -l
 
-You can also run tests for individual TestCases by passing in the path as
-an argument to ``runtests.py``
+This argument may be repeated to select multiple tests:
 
 .. code-block:: console
 
     $ # Running in the current environment
-    $ python runtests.py wagtail.core.tests.test_blocks.TestIntegerBlock
-
+    $ python runtests.py wagtail.core.tests.test_blocks wagtail.core.tests.test_telepath
+    
     $ # Running in a specified Tox environment
-    $ tox -e py36-dj22-sqlite-noelasticsearch wagtail.core.tests.test_blocks.TestIntegerBlock
+    $ tox -e py39-djmain-sqlite-noelasticsearch wagtail.core.tests.test_blocks wagtail.core.tests.test_telepath
 
 Running migrations for the test app models
 ------------------------------------------
@@ -101,7 +102,6 @@ You can create migrations for the test app by running the following from the Wag
 .. code-block:: console
 
     $ django-admin makemigrations --settings=wagtail.tests.settings
-
 
 Testing against PostgreSQL
 --------------------------
